@@ -1,8 +1,4 @@
 SELECT
-    CC.id AS CARD_ID,
-    CC.code AS CARD_CODE,
-    CC.val AS CARD_VAL,
-    C.id AS CARD_COUNTER,
     CLNT.id AS CLIENT_ID,
     CLNT.code AS CLIENT_CODE,
     CLNT.name AS CLIENT_NAME,
@@ -11,7 +7,11 @@ SELECT
     CLNT.telephone AS CLIENT_TELEPHONE,
     CLNT.email AS CLIENT_EMAIL,
     CLNT.city AS CLIENT_CITY,
-    CLNT.address AS CLIENT_ADDRESS
+    CLNT.address AS CLIENT_ADDRESS,
+    CC.id AS CARD_ID,
+    CC.code AS CARD_CODE,
+    CC.val AS CARD_VAL,
+    C.id AS CARD_COUNTER
 FROM
     CLIENT CLNT
     JOIN CLIENTCARD CLCR ON CLCR.clientid = CLNT.id
@@ -21,9 +21,7 @@ FROM
     JOIN COUNTER C ON C.id = CCC.counterid
     JOIN COUNTERTYPE CT ON CT.id = C.countertypeid
 WHERE
-    /*Код вида карт*/
-    GRPC.code = '20000001'
-    /*Код счетчика карт*/
-    AND CT.code = '20000001'
+    GRPC.code = 20000002
+    AND CT.code = 20000001
 ORDER BY
     CC.val

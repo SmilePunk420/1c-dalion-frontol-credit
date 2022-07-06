@@ -7,6 +7,7 @@ SELECT
     DCKD.id AS DOCUMENTTYPE_ID,
     DCKD.code AS DOCUMENTTYPE_CODE,
     CAST(CD.delta AS DECIMAL(10,2)) AS DOCUMENT_SUM,
+    USR.name AS DOCUMENT_CASHIER,
     CC.id AS CARD_ID,
     (
         SELECT
@@ -20,12 +21,13 @@ SELECT
 FROM
    COUNTERD CD
     JOIN DOCUMENT DC ON CD.documentid = DC.id
-    JOIN ENTERPRISE ENT ON DC.enterpriseid = ENT.id
     JOIN DOCKIND DCKD ON DC.dockindid = DCKD.id
     JOIN COUNTER C ON CD.counterid = C.id
     JOIN COUNTERTYPE CT ON C.countertypeid = CT.id
     JOIN CCARDCOUNTER CCC ON CCC.counterid = C.id
     JOIN CCARD CC ON CCC.ccardid = CC.id
+    JOIN "USER" USR ON DC.closeuserid = USR.id
+    JOIN ENTERPRISE ENT ON DC.enterpriseid = ENT.id
 WHERE
     /* Код счетчика карт */
     CT.code = 20000001
